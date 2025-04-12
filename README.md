@@ -1,6 +1,7 @@
 # 🛒 Sistema de Lista de Compras
 
-Este projeto consiste em um sistema de lista de compras desenvolvido com Flask, composto por duas APIs:
+Este projeto foi desenvolvido como forma de avaliação final do curso de pós graduação em Desenvolvimento Full Stack da instituição PUC-Rio.
+O projeto consiste em um sistema de lista de compras desenvolvido com Flask, composto por duas APIs:
 - API Principal: Gerencia o catálogo de produtos
 - API de Compras: Gerencia a lista de compras do usuário
 
