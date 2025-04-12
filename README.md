@@ -45,7 +45,6 @@ O sistema é composto por duas APIs independentes:
 1. Clone o repositório:
 ```bash
 git clone [URL_DO_REPOSITORIO]
-cd mvp-full-stack-julia
 ```
 
 2. Inicie os containers usando Docker Compose:
@@ -78,7 +77,7 @@ docker-compose down -v
 
 ### Endpoints Disponíveis
 
-#### API Principal (http://localhost:5001)
+#### API Principal (http://localhost:5001/api)
 - `GET /api/list-products-store` - Salva no banco de dados os produtos da API externa
 - `GET /api/list-local-products` - Retorna todos os produtos existentes no banco de dados
 - `GET /api/get-product/<id>` - Retorna um produto existente no banco de dados
@@ -87,7 +86,7 @@ docker-compose down -v
 - `DELETE /api/delete-product/<id>` - Remove um produto existente no banco de dados
 - `DELETE /api/delete-all-products` - Remove todos os produtos existentes no banco de dados
 
-#### API de Compras (http://localhost:5002)
+#### API de Compras (http://localhost:5002/api)
 - `GET /api/list-products-store` - Retorna todos os produtos disponíveis no banco de dados
 - `GET /api/product-detail/<id>` - Retorna um produto existente no banco de dados pelo ID
 - `GET /api/list-products-shopping-list` - Retorna todos os itens existentes na lista de compras
