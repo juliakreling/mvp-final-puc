@@ -1,0 +1,57 @@
+version: '3.8'
+
+services:
+  api_principal:
+    build: ./api_principal
+    ports:
+      - "5001:5001"
+    environment:
+      - DATABASE_URL=mysql://root:${MYSQL_ROOT_PASSWORD:-root}@mysql/fake_store
+    depends_on:
+      mysql:
+        condition: service_healthy
+    networks:
+      - app-network
+
+  api_compras:
+    build: ./api_compras
+    ports:
+      - "5002:5002"
+    environment:
+      - DATABASE_URL=mysql://root:${MYSQL_ROOT_PASSWORD:-root}@mysql/shopping_list
+      - API_PRINCIPAL_HOST=api_principal
+    depends_on:
+      mysql:
+        condition: service_healthy
+      api_principal:
+        condition: service_started
+    networks:
+      - app-network
+
+  mysql:
+    image: mysql:8.0
+    ports:
+      - "3306:3306"
+    environment:
+      - MYSQL_ROOT_PASSWORD=${MYSQL_ROOT_PASSWORD:-root}
+      - MYSQL_DATABASE=${MYSQL_DATABASE:-fake_store}
+      - MYSQL_DATABASE_SHOPPING=${MYSQL_DATABASE_SHOPPING:-shopping_list}
+    volumes:
+      - mysql_data:/var/lib/mysql
+      - ./api_principal/init.sql:/docker-entrypoint-initdb.d/init.sql
+      - ./api_compras/init.sql:/docker-entrypoint-initdb.d/init2.sql
+    networks:
+      - app-network
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost", "-u", "root", "-p${MYSQL_ROOT_PASSWORD:-root}"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+    command: --default-authentication-plugin=mysql_native_password
+
+networks:
+  app-network:
+    driver: bridge
+
+volumes:
+  mysql_data: 
