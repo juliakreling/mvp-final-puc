@@ -83,7 +83,7 @@ class Products(Resource):
 class ProductDetail(Resource):
     @ns.doc('product-detail')
     def get(self, id):
-        """Retorna um produto existente no banco de dados pelo ID"""
+        """Retorna um produto existente na lista de compras pelo ID"""
         try:
             item = ShoppingItem.query.get(id)
             if not item:
